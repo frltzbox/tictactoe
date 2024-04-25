@@ -29,7 +29,7 @@ Dieses Projekt implementiert eine einfache Befehlszeilenversion des klassischen 
 4. Befolgen Sie die Anweisungen, um Züge zu machen.
 5. Viel Spaß beim Spielen!
 
-## Implementierungsdetails
+## (mögliche) TODOS
 
 - Das Spielbrett wird als 3x3-Raster mit einer verschachtelten Liste dargestellt.
 - Die Hauptspiellogik ist in der Funktion `main()` implementiert, die das Spiel einrichtet, Spielerinput entgegennimmt und Bot-Züge macht.
