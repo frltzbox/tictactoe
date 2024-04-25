@@ -15,9 +15,10 @@ Dieses Projekt implementiert das klassische Tic Tac Toe-Spiel in Python.
 4. Gewinnen Sie, indem Sie drei Ihrer Symbole in einer Reihe, Spalte oder Diagonale platzieren.
 
 ## Spielbrett (Beispiel)
-
+```
   1  |  2  |  3  
 -----------------
   4  |  5  |  6  
 -----------------
   7  |  8  |  9  
+```
