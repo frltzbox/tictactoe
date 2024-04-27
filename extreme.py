@@ -16,16 +16,7 @@ def draw_board(board):
     print(" " + "---" * size*2)
     print("")
 
-def check_win(board, player):
-    size = len(board)
-    # Überprüfe Zeilen und Spalten
-    for i in range(size):
-        if all(board[i][j] == player for j in range(size)) or all(board[j][i] == player for j in range(size)):
-            return True
-    # Überprüfe Diagonalen
-    if all(board[i][i] == player for i in range(size)) or all(board[i][size - 1 - i] == player for i in range(size)):
-        return True
-    return False
+
 
 def get_user_move(board):
     size = len(board)
@@ -70,12 +61,25 @@ def bot_move(board, player):
             else:
                 board[row][col] = f"{i + 1:>{len(str(size * size))}}"
 
+
     # Wenn weder ein Gewinn noch ein Blockieren möglich ist, mache einen zufälligen Zug
     empty_positions = [(row, col) for row in range(size) for col in range(size) if board[row][col] != '❌' and board[row][col] != '⭕️']
     if empty_positions:
         row, col = random.choice(empty_positions)
         board[row][col] = player
-    draw_board(board)
+    return False
+
+def check_win(board, player):
+    size = len(board)
+    # Überprüfe Zeilen, Spalten und Diagonalen
+    for i in range(size):
+        if all(board[i][j] == player for j in range(size)) or \
+           all(board[j][i] == player for j in range(size)):
+            return True
+    # Überprüfe Diagonalen
+    if all(board[i][i] == player for i in range(size)) or \
+       all(board[i][size - 1 - i] == player for i in range(size)):
+        return True
     return False
 
 def main():
@@ -91,8 +95,10 @@ def main():
 
         if choice == '1' or choice == '2':
             size = int(input("Gib die Größe des Spielfelds ein (z.B. 3 für 3x3): "))
+            if size < 3:
+                print("Das Spielfeld muss mindestens 3x3 groß sein.")
+                continue
             board = initialize_board(size)
-            draw_board(board)
             players = ['❌', '⭕️']
             current_player = random.choice(players)
 
@@ -105,6 +111,8 @@ def main():
                         print("Der Bot gewinnt!")
                         break
                 else:
+                    draw_board(board)
+
                     print("Spieler", current_player + " ist dran")
                     row, col = get_user_move(board)
                     board[row][col] = current_player
@@ -112,6 +120,14 @@ def main():
                     if check_win(board, current_player):
                         print("Spieler", current_player, "gewinnt!")
                         break
+
+                if all(board[i][j] != f"{size * j + i + 1:>{len(str(size * size))}}" for i in range(size) for j in range(size)):
+                    print("Unentschieden!")
+                    break
+
+                if check_win(board, current_player):
+                    print("Spieler", current_player, "gewinnt!")
+                    break
 
                 if all(board[i][j] != f"{size * j + i + 1:>{len(str(size * size))}}" for i in range(size) for j in range(size)):
                     print("Unentschieden!")
